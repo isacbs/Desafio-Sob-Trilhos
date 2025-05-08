@@ -169,7 +169,7 @@ def integrantes():
 def menu():
     running = True
 
-    button_width = 200
+    button_width = 100
     button_height = 50
     button_spacing = 20
 
@@ -178,14 +178,10 @@ def menu():
 
     button_about_rect = pygame.Rect(start_x, SCREEN_HEIGHT - 100, button_width, button_height)
     button_start_rect = pygame.Rect(start_x + button_width + button_spacing, SCREEN_HEIGHT - 100, button_width, button_height)
-    button_group_rect = pygame.Rect(start_x + 2*(button_width + button_spacing), SCREEN_HEIGHT - 100, button_width, button_height)
+    button_group_rect = pygame.Rect(start_x + 2 * (button_width + button_spacing), SCREEN_HEIGHT - 100, button_width, button_height)
 
     while running:
         screen.blit(menu_image, (0, 0))
-
-        pygame.draw.rect(screen, (255, 0, 0, 128), button_about_rect, 2)
-        pygame.draw.rect(screen, (0, 255, 0, 128), button_start_rect, 2)
-        pygame.draw.rect(screen, (0, 0, 255, 128), button_group_rect, 2)
 
         pygame.display.flip()
 
@@ -211,5 +207,6 @@ def menu():
                     print("Botão Grupo pressionado")
                     integrantes()
                     return
+
 
 menu()
