@@ -18,6 +18,7 @@ class NPC(pygame.sprite.Sprite):
         if self.rect.left < 0 or self.rect.right > 800:
             self.speed *= -1
 
+
 def fase_final(player_name=None, tempo_acumulado=0):
     pygame.init()
     pygame.mixer.init()
@@ -26,12 +27,20 @@ def fase_final(player_name=None, tempo_acumulado=0):
     IMG_DIR = os.path.join(BASE_DIR, "imgs")
     
     # Imagens
-    prota_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "prota_parada.png")), (100, 100))
-    prota_andando = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "prota_andando.png")), (100, 100))
-    parte_final_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "parte_final.png")), (800, 600))
+    prota_img = pygame.transform.scale(
+        pygame.image.load(os.path.join(IMG_DIR, "prota_parada.png")), (100, 100)
+    )
+    prota_andando = pygame.transform.scale(
+        pygame.image.load(os.path.join(IMG_DIR, "prota_andando.png")), (100, 100)
+    )
+    parte_final_img = pygame.transform.scale(
+        pygame.image.load(os.path.join(IMG_DIR, "parte_final.png")), (800, 600)
+    )
 
     npc_images = [
-        pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, f"npc{i}.png")), (100, 100))
+        pygame.transform.scale(
+            pygame.image.load(os.path.join(IMG_DIR, f"npc{i}.png")), (100, 100)
+        )
         for i in range(1, 7)
     ]
 
@@ -62,7 +71,7 @@ def fase_final(player_name=None, tempo_acumulado=0):
     ]
 
     # Área de vitória
-    ganhar_area = pygame.Rect(390, 300, 10, 10)
+    ganhar_area = pygame.Rect(360, 289, 10, 20)
 
     tempo_limite = 20
     start_time = time.time()
@@ -133,9 +142,8 @@ def fase_final(player_name=None, tempo_acumulado=0):
         screen.blit(current_prota_img, prota)
         npcs.draw(screen)
 
-        # Obstáculos visíveis em vermelho (somente para testes)
-        for obstaculo in obstaculos + [ganhar_area]:
-            pygame.draw.rect(screen, (255, 0, 0), obstaculo, 2)
+        # Desenha SOMENTE a área de vitória com contorno verde
+        #pygame.draw.rect(screen, (0, 255, 0), ganhar_area, 2)  # Verde
 
         tempo_text = font.render(f"Tempo: {tempo_restante}s", True, AMARELO)
         screen.blit(tempo_text, (20, 20))
@@ -160,6 +168,10 @@ def fase_final(player_name=None, tempo_acumulado=0):
             return
 
         clock.tick(60)
+
+if __name__ == "__main__":
+    fase_final()
+
 
 if __name__ == "__main__":
     fase_final()
