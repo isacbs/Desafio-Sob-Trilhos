@@ -18,6 +18,33 @@ class NPC(pygame.sprite.Sprite):
         if self.rect.left < 0 or self.rect.right > 800:
             self.speed *= -1
 
+def show_quiz_screen():
+    screen = pygame.display.set_mode((800, 600))
+    try:
+        background = pygame.image.load(os.path.join("imgs", "quizcerto.png")).convert()
+        background = pygame.transform.scale(background, (800, 600))
+    except:
+        background = pygame.Surface((800, 600))
+        background.fill((0, 0, 0))
+        screen.blit(text, (400 - text.get_width() // 2, 300 - text.get_height() // 2))
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    return True
+                elif event.key == pygame.K_ESCAPE:
+                    return False
+        
+        screen.blit(background, (0, 0))
+        
+        # Adiciona instrução visual se estiver usando a imagem
+        if background.get_at((0, 0)) != (0, 0, 0):  # Se não for a tela preta de fallback
+            font = pygame.font.SysFont(None, 36)
+        pygame.display.flip()
 
 def fase_final(player_name=None, tempo_acumulado=0):
     pygame.init()
@@ -27,20 +54,12 @@ def fase_final(player_name=None, tempo_acumulado=0):
     IMG_DIR = os.path.join(BASE_DIR, "imgs")
     
     # Imagens
-    prota_img = pygame.transform.scale(
-        pygame.image.load(os.path.join(IMG_DIR, "prota_parada.png")), (100, 100)
-    )
-    prota_andando = pygame.transform.scale(
-        pygame.image.load(os.path.join(IMG_DIR, "prota_andando.png")), (100, 100)
-    )
-    parte_final_img = pygame.transform.scale(
-        pygame.image.load(os.path.join(IMG_DIR, "parte_final.png")), (800, 600)
-    )
+    prota_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "prota_parada.png")), (100, 100))
+    prota_andando = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "prota_andando.png")), (100, 100))
+    parte_final_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "parte_final.png")), (800, 600))
 
     npc_images = [
-        pygame.transform.scale(
-            pygame.image.load(os.path.join(IMG_DIR, f"npc{i}.png")), (100, 100)
-        )
+        pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, f"npc{i}.png")), (100, 100))
         for i in range(1, 7)
     ]
 
@@ -71,7 +90,7 @@ def fase_final(player_name=None, tempo_acumulado=0):
     ]
 
     # Área de vitória
-    ganhar_area = pygame.Rect(360, 289, 10, 20)
+    ganhar_area = pygame.Rect(350, 300, 1, 1)
 
     tempo_limite = 20
     start_time = time.time()
@@ -142,9 +161,6 @@ def fase_final(player_name=None, tempo_acumulado=0):
         screen.blit(current_prota_img, prota)
         npcs.draw(screen)
 
-        # Desenha SOMENTE a área de vitória com contorno verde
-        #pygame.draw.rect(screen, (0, 255, 0), ganhar_area, 2)  # Verde
-
         tempo_text = font.render(f"Tempo: {tempo_restante}s", True, AMARELO)
         screen.blit(tempo_text, (20, 20))
         if player_name:
@@ -160,6 +176,11 @@ def fase_final(player_name=None, tempo_acumulado=0):
             screen.blit(venceu_text, (SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2))
             pygame.display.flip()
             pygame.time.delay(2000)
+            
+            # Mostra a tela do quiz e espera ENTER
+            if show_quiz_screen():
+                from quiz import run_quiz
+                run_quiz(player_name, tempo_total)
             return ranking(player_name, tempo_total)
 
         if tempo_restante <= 0:
@@ -171,7 +192,6 @@ def fase_final(player_name=None, tempo_acumulado=0):
 
 if __name__ == "__main__":
     fase_final()
-
 
 if __name__ == "__main__":
     fase_final()
