@@ -166,12 +166,12 @@ def fase_media(player_name=None, tempo_acumulado=0):
             return fase_media(player_name, tempo_acumulado)
 
         if prota.y <= 10:
-            mensagem = "Você venceu!"
             desenhar_tela()
             pygame.display.flip()
-            pygame.time.wait(3000)
+            pygame.time.wait(2000)
             tempo_total = tempo_acumulado + (time.time() - start_time)
-            return ranking(player_name, tempo_total)
+            from faseFinal import fase_final
+            return fase_final(player_name, tempo_total)
 
         tempo_restante = max(0, int(tempo_limite - (time.time() - start_time)))
         if tempo_restante <= 0:
