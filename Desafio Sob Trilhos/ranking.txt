@@ -1,0 +1,10 @@
+Elizabeth,25
+Tati,24
+Julia,130
+
+Isa,96
+Dija,47
+Leticia,31
+Raissa,76
+Rai,35
+Leticia,57
