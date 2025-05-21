@@ -51,7 +51,7 @@ def fase_final(player_name=None, tempo_acumulado=0):
     # Imagens
     prota_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "prota_parada.png")), (100, 100))
     prota_andando = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "prota_andando.png")), (100, 100))
-    parte_final_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "parte_final.png")), (800, 600))
+    parte_final_img = pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, "partefinal.png")), (800, 600))
 
     npc_images = [
         pygame.transform.scale(pygame.image.load(os.path.join(IMG_DIR, f"npc{i}.png")), (100, 100))
